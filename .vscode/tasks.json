@@ -1,0 +1,75 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Assembler build and link",
+            "type": "shell",
+            "command": "as",
+            "args": [
+                "-g",
+                "-o" , "${fileDirname}/${fileBasenameNoExtension}.o",
+                "${file}",
+                "&&",
+                "ld",
+                "-dynamic-linker", "/lib64/ld-linux-x86-64.so.2",
+                "-lc",
+                "${fileDirname}/${fileBasenameNoExtension}.o",
+                "-o", "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^(.*?):(\\d+):\\s+(?:Error|Warning|ошибка|предупреждение):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "message": 3
+                }
+            }
+        },
+        {
+            "label": "Run program",
+            "type": "shell",
+            "command": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],                                     
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean build",
+            "type": "shell",
+            "command": "rm ${fileDirname}/${fileBasenameNoExtension}.o",
+            "args": [],                                     
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
